@@ -5,7 +5,7 @@ export function createMenu(mainWindow: BrowserWindow) {
   Menu.setApplicationMenu(
     Menu.buildFromTemplate([
       {
-        label: process.platform === 'darwin' ? undefined : 'App',
+        label: process.platform === 'darwin' ? undefined : 'App1',
         type: 'submenu',
         submenu: [
           {

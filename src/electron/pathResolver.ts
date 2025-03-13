@@ -17,3 +17,9 @@ export function getUIPath() {
 export function getAssetPath() {
   return path.join(app.getAppPath(), isDev() ? '.' : '..', '/src/assets');
 }
+
+export function getDBPath() {
+  const pathToDb = path.join(app.getAppPath(), '/userData/DaneAdresowe.db');
+  console.log({pathToDb});
+  return pathToDb;
+}

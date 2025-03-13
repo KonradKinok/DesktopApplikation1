@@ -1,11 +1,12 @@
-import { app, BrowserWindow, ipcMain, Tray } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, Tray } from "electron";
 import path from "path";
 import { ipcMainHandle, ipcMainOn, isDev } from "./util.js";
 import { getStaticData, pollResources } from "./resourceManager.js";
-import {getAssetPath, getPreloadPath, getUIPath} from "./pathResolver.js";
+import {getAssetPath, getDBPath, getPreloadPath, getUIPath} from "./pathResolver.js";
 import { createTray } from "./tray.js";
 import { createMenu } from "./menu.js";
 
+Menu.setApplicationMenu(null);
 
 app.on("ready", () => {
   const mainWindow = new BrowserWindow({
@@ -13,7 +14,7 @@ app.on("ready", () => {
       preload:getPreloadPath(),
     },
     // disables default system frame (dont do this if you want a proper working menu bar)
-    frame: false,
+    // frame: false,
   });
   if(isDev()) {
     mainWindow.loadURL("http://localhost:5123");
@@ -21,6 +22,7 @@ app.on("ready", () => {
   else {
     mainWindow.loadFile(getUIPath());
   }
+  getDBPath();
   pollResources(mainWindow);
   ipcMainHandle('getStaticData', () => {
     return getStaticData();

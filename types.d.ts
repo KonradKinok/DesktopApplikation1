@@ -1,17 +1,10 @@
-
-
-
 type StaticData = {
   totalStorage: number;
   cpuModel: string;
   totalMemoryGB: number;
 };
 
-
-
 type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
-
-
 
 type UnsubscribeFunction = () => void;
   
@@ -43,8 +36,5 @@ type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
     };
   }
 }
-
-
-
 
   export {};
