@@ -14,13 +14,18 @@ type EventPayloadMapping = {
   getStaticData: StaticData;
   changeView: View;
   sendFrameAction: FrameWindowAction;
+  textTemp: TextTempDataBase;
 };
 
 type Statistics = {
   cpuUsage: number;
   ramUsage: number;
   storageUsage: number;
-};
+  };
+  type TextTempDataBase = {
+    textNazwa: string;
+  };
+  
 type View = 'CPU' | 'RAM' | 'STORAGE';
 type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
   interface Window {
@@ -33,6 +38,7 @@ type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
       callback: (view: View) => void
       ) => UnsubscribeFunction;
       sendFrameAction: (payload: FrameWindowAction) => void;
+      textTemp: () => Promise<TextTempDataBase>;
     };
   }
 }

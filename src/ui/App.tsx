@@ -4,8 +4,33 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import { useStatistics } from "./useStatistics";
 import { Chart } from "./Chart";
-
+import { textTemp } from "../electron/dataBase";
 function App() {
+  const [text, setText] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await window.electron.textTemp();
+        console.log("Odpowiedź z serwera:", response);
+        setText(response.textNazwa);
+      } catch (error) {
+        console.error("Błąd podczas pobierania danych:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const onClickPodajImie = async () => {
+    try {
+      const response = await window.electron.textTemp();
+      console.log("Odpowiedź z serwera:", response);
+      setText(response.textNazwa);
+    } catch (error) {
+      console.error("Błąd podczas pobierania danych:", error);
+    }
+  };
+
   const [count, setCount] = useState(0);
   const statistics = useStatistics(10);
   const [activeView, setActiveView] = useState<View>("CPU");
@@ -48,11 +73,12 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Nazwisko1: {text}</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           liczbą jest {count}
         </button>
+        <button onClick={onClickPodajImie}>Podaj imię:</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

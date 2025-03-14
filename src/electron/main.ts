@@ -5,6 +5,7 @@ import { getStaticData, pollResources } from "./resourceManager.js";
 import {getAssetPath, getDBPath, getPreloadPath, getUIPath} from "./pathResolver.js";
 import { createTray } from "./tray.js";
 import { createMenu } from "./menu.js";
+import { textTemp } from "./dataBase.js";
 
 Menu.setApplicationMenu(null);
 
@@ -22,12 +23,14 @@ app.on("ready", () => {
   else {
     mainWindow.loadFile(getUIPath());
   }
-  getDBPath();
+ 
   pollResources(mainWindow);
   ipcMainHandle('getStaticData', () => {
     return getStaticData();
   });
-
+  ipcMainHandle('textTemp',  () => {
+    return textTemp();
+  });
  ipcMainOn('sendFrameAction', (payload) => {
     switch (payload) {
       case 'CLOSE':
