@@ -14,7 +14,7 @@ dist-electron
 dist-ssr
 *.local
 e2e
-userData
+userData/*
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
