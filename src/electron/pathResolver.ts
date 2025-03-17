@@ -23,3 +23,9 @@ export function getDBPath() {
   console.log({pathToDb});
   return pathToDb;
 }
+
+export function getDBPath1() {
+  const pathToDb = path.join(app.getAppPath(), '/userData/BilancioDataBase.db');
+  console.log({pathToDb});
+  return pathToDb;
+}

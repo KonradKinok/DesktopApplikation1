@@ -2,9 +2,10 @@ import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 import { BrowserWindow } from 'electron';
 import { ipcWebContentsSend } from './util.js';
-import { getDBPath } from './pathResolver.js';
+import { getDBPath, getDBPath1 } from './pathResolver.js';
 // import { getDBPath, getAssetPath } from './pathResolver.js';
 const dbPath = getDBPath();
+const dbPath1=getDBPath1();
 // const dbPath= "../../userData/DaneAdresowe.db";
 async function openDb() {
   return open({
@@ -12,7 +13,12 @@ async function openDb() {
     driver: sqlite3.Database
   });
 }
-
+async function openDb1() {
+  return open({
+    filename: dbPath1,
+    driver: sqlite3.Database
+  });
+}
 export async function createTable() {
   const db = await openDb();
   await db.exec(`
@@ -44,6 +50,12 @@ export async function deleteUser(id: number) {
   const db = await openDb();
   await db.run('DELETE FROM Users WHERE id = ?', [id]);
 }
+
+export async function getDowodRejestracyjny(id: number) {
+  const db = await openDb();
+  
+  return db.get('SELECT * FROM Users WHERE id = ?', [id]);
+}
 // Określenie ścieżki do pliku bazy danych
 // const dbPath = getDBPath();
 // export async function openDb () {
@@ -65,11 +77,21 @@ async function textTemp1() {
   return user;
 }
 
-
 export  async function textTemp() {
   const user = await textTemp1();
   const name = user.Name;
   return { textNazwa: `Konrad Konik ${name}` };
+}
+
+export async function getAllDocuments(): Promise<DictionaryDocuments> {
+  const db = await openDb1();
+  
+  return db.all('SELECT * FROM DictionaryDocuments');
+}
+export  async function getDataDocuments() {
+  const documents = await getAllDocuments();
+  console.dir( documents );
+  return documents;
 }
 
 // // Otwarcie bazy danych

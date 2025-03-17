@@ -5,7 +5,12 @@ import { getStaticData, pollResources } from "./resourceManager.js";
 import {getAssetPath, getDBPath, getPreloadPath, getUIPath} from "./pathResolver.js";
 import { createTray } from "./tray.js";
 import { createMenu } from "./menu.js";
-import { textTemp } from "./dataBase.js";
+import { getDataDocuments, textTemp } from "./dataBase.js";
+import { fetchDocuments, queryToDB } from "./dataBase/dbFunction.js";
+export type DictionaryDocuments = {
+  DocumentId: number;
+  DocumentName: string;
+}[];
 
 Menu.setApplicationMenu(null);
 
@@ -30,6 +35,12 @@ app.on("ready", () => {
   });
   ipcMainHandle('textTemp',  () => {
     return textTemp();
+  });
+  ipcMainHandle('fetchDocuments',  () => {
+    return fetchDocuments();
+  });
+  ipcMainHandle('queryToDB',  () => {
+    return queryToDB.firstMetod();
   });
  ipcMainOn('sendFrameAction', (payload) => {
     switch (payload) {

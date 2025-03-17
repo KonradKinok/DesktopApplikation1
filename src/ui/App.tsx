@@ -7,6 +7,9 @@ import { Chart } from "./Chart";
 import { textTemp } from "../electron/dataBase";
 function App() {
   const [text, setText] = useState<string | null>(null);
+  const [documents, setDocuments] = useState<DictionaryDocuments[] | null>(
+    null
+  );
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,7 +23,22 @@ function App() {
 
     fetchData();
   }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await window.electron.fetchDocuments();
+        console.log("getDataDocuments: Odpowiedź z serwera:", response);
+        if (response) setDocuments(response);
+      } catch (error) {
+        console.error(
+          "getDataDocuments: Błąd podczas pobierania danych:",
+          error
+        );
+      }
+    };
 
+    fetchData();
+  }, []);
   const onClickPodajImie = async () => {
     try {
       const response = await window.electron.textTemp();

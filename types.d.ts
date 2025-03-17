@@ -7,7 +7,7 @@ type StaticData = {
 type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
 
 type UnsubscribeFunction = () => void;
-  
+ 
 declare global {
 type EventPayloadMapping = {
   statistics: Statistics;
@@ -15,6 +15,8 @@ type EventPayloadMapping = {
   changeView: View;
   sendFrameAction: FrameWindowAction;
   textTemp: TextTempDataBase;
+  fetchDocuments: DictionaryDocuments[];
+  queryToDB: DictionaryDocuments;
 };
 
 type Statistics = {
@@ -25,6 +27,10 @@ type Statistics = {
   type TextTempDataBase = {
     textNazwa: string;
   };
+   export type DictionaryDocuments={
+    DocumentId: number;
+    DocumentName: string ;
+  }
   
 type View = 'CPU' | 'RAM' | 'STORAGE';
 type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
@@ -39,6 +45,8 @@ type FrameWindowAction = 'CLOSE' | 'MAXIMIZE' | 'MINIMIZE';
       ) => UnsubscribeFunction;
       sendFrameAction: (payload: FrameWindowAction) => void;
       textTemp: () => Promise<TextTempDataBase>;
+      fetchDocuments: () => Promise<DictionaryDocuments[]>;
+      queryToDB: (query: string) => Promise<DictionaryDocuments>;
     };
   }
 }

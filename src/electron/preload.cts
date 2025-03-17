@@ -14,6 +14,8 @@ electron.contextBridge.exposeInMainWorld('electron', {
   getStaticData: () => ipcInvoke('getStaticData'),
   sendFrameAction: (payload) => ipcSend('sendFrameAction', payload),
   textTemp: () => ipcInvoke('textTemp'),
+  fetchDocuments: () => ipcInvoke('fetchDocuments'),
+  queryToDB: () => ipcInvoke('queryToDB') ,
 } satisfies Window["electron"]);
 
 
