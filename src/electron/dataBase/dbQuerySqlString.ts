@@ -1,9 +1,14 @@
-export function getAllDocumentsNameQueryString() {
+export function getTableDictionaryDocumentsSqlString() {
+    return `SELECT * FROM DictionaryDocuments`;
+};
+
+// Pobierz wszystkie nazwy dokumentów 
+export function getAllDocumentsNameSqlString():string {
   return `SELECT
-  dd.DocumentName AS Dokument,
-    mt.MainTypeName AS Typ_Główny,
-    t.TypeName AS Typ,
-    st.SubtypeName AS Podtyp
+  dd.DocumentName AS DocumentName,
+    mt.MainTypeName AS MainTypeName,
+    t.TypeName AS TypeName,
+    st.SubtypeName AS SubtypeName
 FROM
     DictionaryDocuments dd
     LEFT JOIN DictionaryDocuments_MainType dmt ON dd.DocumentId = dmt.DocumentId

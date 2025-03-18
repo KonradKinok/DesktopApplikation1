@@ -69,30 +69,30 @@ export async function getDowodRejestracyjny(id: number) {
 //   const db = await openDb();
 //   await db.exec(`CREATE TABLE test (id INTEGER PRIMARY KEY, name TEXT)`);
 // }
-const temp="Friend"
-async function textTemp1() {
-  const user = await getUser(2);
-  console.log("Uzytkownik:", { user });
+// const temp="Friend"
+// async function textTemp1() {
+//   const user = await getUser(2);
+//   console.log("Uzytkownik:", { user });
   
-  return user;
-}
+//   return user;
+// }
 
-export  async function textTemp() {
-  const user = await textTemp1();
-  const name = user.Name;
-  return { textNazwa: `Konrad Konik ${name}` };
-}
+// export  async function textTemp() {
+//   const user = await textTemp1();
+//   const name = user.Name;
+//   return { textNazwa: `Konrad Konik ${name}` };
+// }
 
-export async function getAllDocuments(): Promise<DictionaryDocuments> {
-  const db = await openDb1();
+// export async function getAllDocuments(): Promise<DictionaryDocuments> {
+//   const db = await openDb1();
   
-  return db.all('SELECT * FROM DictionaryDocuments');
-}
-export  async function getDataDocuments() {
-  const documents = await getAllDocuments();
-  console.dir( documents );
-  return documents;
-}
+//   return db.all('SELECT * FROM DictionaryDocuments');
+// }
+// export  async function getDataDocuments() {
+//   const documents = await getAllDocuments();
+//   console.dir( documents );
+//   return documents;
+// }
 
 // // Otwarcie bazy danych
 //  const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READWRITE, (err) => {

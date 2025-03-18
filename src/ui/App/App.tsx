@@ -1,33 +1,22 @@
 import { useEffect, useMemo, useState } from "react";
-import reactLogo from "./assets/react.svg";
 
 import "./App.css";
-import { useStatistics } from "./useStatistics";
-import { Chart } from "./Chart";
-import { textTemp } from "../electron/dataBase";
+import { useStatistics } from "../useStatistics";
+import { Chart } from "../Chart";
+import { useTableDictionaryDocuments } from "../hooks/useTableDictionaryDocuments";
 function App() {
   const [text, setText] = useState<string | null>(null);
   const [documents, setDocuments] = useState<DictionaryDocuments[] | null>(
     null
   );
+  const [anyTable, setAnyTable] = useState<unknown[] | null>(null);
+  const { data: tableDictionaryDocuments } = useTableDictionaryDocuments();
+  const { data: allDocumentsName } = useTableDictionaryDocuments();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await window.electron.textTemp();
-        console.log("Odpowiedź z serwera:", response);
-        setText(response.textNazwa);
-      } catch (error) {
-        console.error("Błąd podczas pobierania danych:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await window.electron.fetchDocuments();
-        console.log("getDataDocuments: Odpowiedź z serwera:", response);
+        const response = await window.electron.getTableDictionaryDocuments();
+        console.log("getDataDocumentsNieznany: Odpowiedź z serwera:", response);
         if (response) setDocuments(response);
       } catch (error) {
         console.error(
@@ -39,15 +28,22 @@ function App() {
 
     fetchData();
   }, []);
-  const onClickPodajImie = async () => {
-    try {
-      const response = await window.electron.textTemp();
-      console.log("Odpowiedź z serwera:", response);
-      setText(response.textNazwa);
-    } catch (error) {
-      console.error("Błąd podczas pobierania danych:", error);
-    }
-  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await window.electron.getAllDocumentsName();
+        console.log("getAllDocumentName: Odpowiedź z serwera:", response);
+      } catch (error) {
+        console.error(
+          "getAllDocumentName: Błąd podczas pobierania danych:",
+          error
+        );
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const [count, setCount] = useState(0);
   const statistics = useStatistics(10);
@@ -86,17 +82,19 @@ function App() {
       <div style={{ height: 120 }}>
         <Chart data={activeUsages} maxDataPoints={10} />
       </div>
-      <div>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
+
       <h1>Nazwisko1: {text}</h1>
+      <ul>
+        {tableDictionaryDocuments &&
+          tableDictionaryDocuments.map((document) => (
+            <li key={document.DocumentId}>{document.DocumentName}</li>
+          ))}
+      </ul>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           liczbą jest {count}
         </button>
-        <button onClick={onClickPodajImie}>Podaj imię:</button>
+        <button>Podaj imię:</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>

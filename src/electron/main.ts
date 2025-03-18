@@ -5,8 +5,7 @@ import { getStaticData, pollResources } from "./resourceManager.js";
 import {getAssetPath, getDBPath, getPreloadPath, getUIPath} from "./pathResolver.js";
 import { createTray } from "./tray.js";
 import { createMenu } from "./menu.js";
-import { getDataDocuments, textTemp } from "./dataBase.js";
-import { fetchDocuments, queryToDB } from "./dataBase/dbFunction.js";
+import { getAllDocumentsName, getTableDictionaryDocuments, queryToDB } from "./dataBase/dbFunction.js";
 export type DictionaryDocuments = {
   DocumentId: number;
   DocumentName: string;
@@ -15,10 +14,15 @@ export type DictionaryDocuments = {
 Menu.setApplicationMenu(null);
 
 app.on("ready", () => {
+  
   const mainWindow = new BrowserWindow({
+    width: 1024,
+    height: 768,
+    resizable: true,
     webPreferences: {
       preload:getPreloadPath(),
-    },
+  },
+    
     // disables default system frame (dont do this if you want a proper working menu bar)
     // frame: false,
   });
@@ -33,14 +37,15 @@ app.on("ready", () => {
   ipcMainHandle('getStaticData', () => {
     return getStaticData();
   });
-  ipcMainHandle('textTemp',  () => {
-    return textTemp();
+  
+  ipcMainHandle('getTableDictionaryDocuments',  () => {
+    return getTableDictionaryDocuments();
   });
-  ipcMainHandle('fetchDocuments',  () => {
-    return fetchDocuments();
+  ipcMainHandle('getAllDocumentName',  () => {
+    return getAllDocumentsName();
   });
   ipcMainHandle('queryToDB',  () => {
-    return queryToDB.firstMetod();
+    return queryToDB.secondMetod();
   });
  ipcMainOn('sendFrameAction', (payload) => {
     switch (payload) {

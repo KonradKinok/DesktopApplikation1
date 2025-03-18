@@ -17,7 +17,7 @@ class Database {
       if (err) {
         console.error('Błąd połączenia z bazą danych:', err.message);
       } else {
-        console.log('Połaczono z baza danych.');
+        console.log('Polaczono z baza danych.');
       }
     });
   }
