@@ -100,7 +100,7 @@ function App() {
         </p>
       </div>
       <p className="read-the-docs">
-        Kliknij na the Vite and React logos to learn more
+        Kliknij na ten przycisk, aby przeczytać dokumentację{" "}
       </p>
     </div>
   );
